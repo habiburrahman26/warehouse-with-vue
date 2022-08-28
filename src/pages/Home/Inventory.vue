@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-import InventoryList from './InventoryList.vue';
+import axios from "axios";
+import InventoryList from "./InventoryList.vue";
 
 export default {
   components: {
@@ -32,18 +32,16 @@ export default {
   methods: {
     getInventorys() {
       this.isLoading = true;
-      axios('https://fathomless-coast-62063.herokuapp.com/inventory').then(
+      axios("https://fathomless-coast-62063.herokuapp.com/inventory").then(
         ({ data }) => {
           this.inventorys = data;
-          console.log(data);
+          this.isLoading = false;
         }
       );
-      this.isLoading = false;
     },
   },
-  mounted() {
+  created() {
     this.getInventorys();
-    console.log(this.isLoading)
   },
 };
 </script>

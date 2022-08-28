@@ -1,5 +1,5 @@
 <template>
-  <section class="flex items-center gap-16 w-3/4 mx-auto h-[60vh]">
+  <section class="flex items-center gap-16 w-3/4 mx-auto h-[90vh]">
     <div class="basis-1/2">
       <h1 class="text-5xl font-semibold mb-4">Enhance your environment</h1>
       <p class="mb-8 text-lg">

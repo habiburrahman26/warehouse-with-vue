@@ -19,9 +19,25 @@
         </li>
       </ul>
       <div class="ml-auto">
-        <button class="px-4 py-2 font-medium border border-transparent hover:border hover:border-pink-400 rounded mr-4">Login</button>
-        <button class="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white font-semibold">
+        <router-link
+          to="/login"
+          v-if="!loggedIn"
+          class="px-4 py-2 font-medium border border-transparent hover:border hover:border-pink-400 rounded mr-4"
+          >Login</router-link
+        >
+        <router-link
+          v-if="!loggedIn"
+          to="/signup"
+          class="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white font-semibold"
+        >
           SignUp
+        </router-link>
+        <button
+          v-if="loggedIn"
+          class="px-4 py-2 font-medium border-transparent border border-pink-400 hover:bg-pink-200 rounded mr-4"
+          @click="logout"
+        >
+          Logout
         </button>
       </div>
     </nav>
@@ -29,9 +45,29 @@
 </template>
 
 <script>
+import auth from "../firebase.init";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+
 export default {
   data() {
-    return {};
+    return {
+      loggedIn: false,
+    };
+  },
+  methods: {
+    logout() {
+      signOut(auth);
+      this.$router.replace("/login");
+    },
+  },
+  mounted() {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.loggedIn = true;
+      } else {
+        this.loggedIn = false;
+      }
+    });
   },
 };
 </script>
