@@ -1,5 +1,5 @@
 <template>
-  <header class="px-28 py-3">
+  <header class="w-3/4 py-3 mx-auto h-[10vh]">
     <nav class="flex items-center gap-14">
       <p class="text-3xl font-semibold">E-Store</p>
       <ul class="flex items-center gap-5 text-lg">

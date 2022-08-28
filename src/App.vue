@@ -1,6 +1,6 @@
 <template>
-  <Header/>
-  <div></div>
+  <Header />
+  <router-view></router-view>
 </template>
 
 <script>
@@ -14,4 +14,3 @@ export default {
   },
 };
 </script>
-
