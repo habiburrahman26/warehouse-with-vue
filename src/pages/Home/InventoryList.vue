@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow-lg rounded p-4 mb-8">
+  <div class="shadow-lg rounded p-4 mb-8 h-[550px] relative">
     <div>
       <img :src="image" alt="" />
     </div>
@@ -14,7 +14,7 @@
       <p><span class="font-medium">Price:</span> {{ price }}Tk</p>
     </div>
     <div>
-      <router-link :to="detailsLink" class="px-8 py-2 bg-blue-400" @click="updateInventory">
+      <router-link :to="detailsLink" class="px-8 py-2 bg-blue-400 absolute bottom-4" @click="updateInventory">
         update
       </router-link>
     </div>
