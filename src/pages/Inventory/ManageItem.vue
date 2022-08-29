@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-10">
     <div class="text-center">
       <router-link
         to="/addItem"
