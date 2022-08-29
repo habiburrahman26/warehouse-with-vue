@@ -7,46 +7,57 @@
         >Add Item</router-link
       >
     </div>
-    <table class="table">
+    <p v-if="isLoading" class="text-center font-semibold pt-4">Loding...</p>
+    <table class="table-auto mx-auto mt-8 mb-8" v-else>
       <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Img</th>
-        <th>Action</th>
+        <th class="border border-slate-700 px-4">Name</th>
+        <th class="border border-slate-700 px-4">Price</th>
+        <th class="border border-slate-700 px-4">Quantity</th>
+        <th class="border border-slate-700 px-4">Photo</th>
+        <th class="border border-slate-700 px-4">Action</th>
       </tr>
-      <tbody></tbody>
+      <tbody>
+        <item-list
+          v-for="item in inventories"
+          :key="item._id"
+          :name="item.name"
+          :price="item.price"
+          :quantity="item.quantity"
+          :image="item.image"
+        ></item-list>
+      </tbody>
     </table>
+    <div class="text-center mb-4">
+      <button
+        v-for="page in pageNumber"
+        :key="page"
+        @click="addPageNumber(page)"
+        class="border-2 border-blue-200 px-3 py-1 ml-2"
+        :class="clickedPage === page ? 'bg-blue-400 text-white' : ''"
+      >
+        {{ page }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import ItemList from "./ItemList.vue";
 
 export default {
+  components: {
+    ItemList,
+  },
   data() {
     return {
       inventories: [],
       pageNumber: 0,
       clickedPage: 0,
-      isLoading: false,
+      isLoading: true,
     };
   },
   methods: {
-    async getInventorys() {
-      try {
-        this.isLoading = true;
-        const { data } = await axios.get(
-          `https://fathomless-coast-62063.herokuapp.com/inventorys?page=${this.clickedPage}`
-        );
-        this.inventories = data;
-        this.isLoading = false;
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-        this.isLoading = false;
-      }
-    },
     async pageCount() {
       try {
         const { data } = await axios.get(
@@ -57,6 +68,27 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async getInventorys(clickedPage) {
+      try {
+        const { data } = await axios.get(
+          `https://fathomless-coast-62063.herokuapp.com/inventorys?page=${clickedPage || 0}`
+        );
+        this.inventories = data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    addPageNumber(page=0) {
+      this.clickedPage = page;
+    },
+  },
+  watch: {
+    clickedPage(newVal) {
+      this.getInventorys(newVal-1);
+      console.log(newVal)
     },
   },
   mounted() {
