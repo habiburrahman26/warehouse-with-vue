@@ -21,29 +21,29 @@
         type="submit"
         class="px-10 py-2 bg-blue-400 text-white font-semibold rounded mt-4"
       >
-        {{ isLoading ? "Login..." : "Login" }}
+        {{ isLoading ? 'Login...' : 'Login' }}
       </button>
     </form>
   </div>
 </template>
 
 <script>
-import { signInWithEmailAndPassword } from "firebase/auth";
-import auth from "../../firebase.init";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import auth from '../../firebase.init';
 
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       isLoading: false,
       error: null,
     };
   },
   computed: {
     splitErrorMessage() {
-      const message = this.error?.split(":")[0];
-      return message?.split("(")[1];
+      const message = this.error?.split(':')[0];
+      return message?.split('(')[1];
     },
   },
   methods: {
@@ -52,11 +52,11 @@ export default {
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          localStorage.setItem("token", user.uid); // store the token in local storage
+          localStorage.setItem('token', user.accessToken); // store the token in local storage
           this.isLoading = false;
 
           if (user.email) {
-            this.$router.replace("/home");
+            this.$router.replace(this.$route.redirectedFrom?.path ?? '/');
           }
         })
         .catch((error) => {

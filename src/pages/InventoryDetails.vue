@@ -50,7 +50,6 @@ export default {
           `https://fathomless-coast-62063.herokuapp.com/inventory/${this.id}`
         )
         .then(({ data }) => {
-          console.log(data);
           this.inventory = data;
           this.isLoading = false;
         })

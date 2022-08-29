@@ -6,15 +6,15 @@
         <li>
           <router-link class="font-medium" to="/home">Home</router-link>
         </li>
-        <li>
+        <li v-if="loggedIn">
           <router-link class="font-medium" to="/manageItem"
             >Manage Items</router-link
           >
         </li>
-        <li>
+        <li v-if="loggedIn">
           <router-link class="font-medium" to="/addItem">Add Item</router-link>
         </li>
-        <li>
+        <li v-if="loggedIn">
           <router-link class="font-medium" to="/myItem">My Item</router-link>
         </li>
       </ul>
@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import auth from "../firebase.init";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import auth from '../firebase.init';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 export default {
   data() {
@@ -57,7 +57,8 @@ export default {
   methods: {
     logout() {
       signOut(auth);
-      this.$router.replace("/login");
+      localStorage.removeItem('token');
+      this.$router.replace('/login');
     },
   },
   mounted() {
