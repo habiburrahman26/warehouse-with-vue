@@ -16,7 +16,7 @@
         v-model="password"
         class="px-2 py-1 border w-4/5 outline-none focus:border focus:border-blue-400 mb-3 rounded"
       />
-      <p class="text-red-300">{{ splitErrorMessage }}</p>
+      <p class="text-red-300">{{ error }}</p>
       <button
         type="submit"
         class="px-10 py-2 bg-blue-400 text-white font-semibold rounded mt-4"
@@ -24,14 +24,19 @@
         SignUp
       </button>
     </form>
+    <social-media>Register with Github</social-media>
   </div>
 </template>
 
 <script>
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase.init";
+import SocialMedia from '../../components/socialMedia/SocialMedia.vue'
 
 export default {
+  components:{
+    SocialMedia
+  },
   data() {
     return {
       email: "",
@@ -40,25 +45,20 @@ export default {
       error: null,
     };
   },
-  computed: {
-    splitErrorMessage() {
-      const message = this.error?.split(":")[0];
-      return message?.split("(")[1];
-    },
-  },
   methods: {
     formSubmit() {
       createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          localStorage.setItem("token", user.uid); // store the token in local storage
+          localStorage.setItem("token", user.accessToken); // store the token in local storage
 
           if (user.email) {
-            this.$router.replace("/home");
+            this.$router.replace(this.$route.redirectedFrom?.path ?? "/");
           }
         })
         .catch((error) => {
-          this.error = error.message;
+          this.error = error.code;
+          console.log(error)
         });
     },
   },

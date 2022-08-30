@@ -76,6 +76,7 @@ export default {
 <style scoped>
 
 a.active {
-  color: red;
+  border-bottom: 2px solid rgba(79, 160, 226, 0.822);
+  color:  rgba(79, 160, 226, 0.822);
 }
 </style>
