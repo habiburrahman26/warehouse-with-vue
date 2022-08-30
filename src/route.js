@@ -17,8 +17,7 @@ function redirectToLogin(_, _2, next) {
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: Home },
-    { path: '/home', redirect: '/' },
+    { path: '/', component: Home, },
     { path: '/addItem', component: Home },
     {
       path: '/manageItem',
@@ -35,6 +34,9 @@ const router = createRouter({
     { path: '/signup', component: SignUp },
     { path: '/login', component: Login },
   ],
+  linkActiveClass:'active'
 });
 
+
 export default router;
+

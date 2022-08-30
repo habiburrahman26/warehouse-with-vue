@@ -4,7 +4,7 @@
       <p class="text-3xl font-semibold">E-Store</p>
       <ul class="flex items-center gap-5 text-lg">
         <li>
-          <router-link class="font-medium" to="/home">Home</router-link>
+          <router-link class="font-medium" to="/">Home</router-link>
         </li>
         <li v-if="loggedIn">
           <router-link class="font-medium" to="/manageItem"
@@ -72,3 +72,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+a.active {
+  color: red;
+}
+</style>
